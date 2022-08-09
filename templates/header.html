@@ -1,0 +1,24 @@
+
+<div class="topnav" id="myTopnav">
+  <img src="{{url_for('static', filename='rhythm.png')}}" style="float: left; height:50px; width: 100px; background: rgb(243, 234, 234);"/>
+  <!-- <img src="rhythm.png" style="float: left; height:100%;"> -->
+  <a href="/" class="active">Home</a>
+  <a href="/audio_to_text/">Speech to Text</a>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>
+
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+  {% for category,message in messages %}
+
+    <div class="alert">
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+        <strong>{{category}} :</strong> {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}

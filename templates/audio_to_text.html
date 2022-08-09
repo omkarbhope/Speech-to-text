@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="/static/header_file.css">
+<link rel="stylesheet" type="text/css" href="/static/footer_file.css">
+<link rel="stylesheet" type="text/css" href="/static/main.css">
+<link rel="stylesheet" type="text/css" href="/static/audio_to_text.css">
+<script src="/static/recorder.js"></script>
+<script src="/static/audiodisplay.js"></script>
+<script src="/static/main.js"></script>
+<script src="/static/recorderWorker.js"></script>
+
+<style>
+    .hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+</style>
+
+</head>
+
+    <body style="background-color:rgb(127, 195, 255);">
+    {% include "header.html" %}
+    
+    <div id="loader">
+      <img src="{{url_for('static', filename='rhythm.png')}}" style="float: left; height:200px; width: 300px; padding-left: 120px;"/>
+        <p class="glow" style="float:center; padding-top: 60px">SPEECH to TEXT</p>
+    </div>
+
+    <div id="loader">
+        <div class="row " style="position:relative;">
+            <div class="column1">
+                <iframe name="hiddenFrame" class="hide"></iframe>
+                <h2>Choose Conversion Language</h2>
+                <form class="form-inline" method="POST" action="{{ url_for('test') }}" target="hiddenFrame">
+                    <div class="form-group">
+                      <div class="input-group">
+
+                            <select name= dics method="GET" action="/">
+                                {% for d in dic %}
+                                <option value= "{{d}}" SELECTED>{{d}}</option>"
+                                {% endfor %}
+                            </select>
+                      </div>
+                      <button type="submit" class="btn btn-default" action = "audio_to_text.html">Go</button>
+                    </div>
+                  </form>
+                
+                <h2>Record Audio</h2>
+                    <p>
+                        <button id="start" class="btn btn-success" onclick="startRecording()" disabled>Start</button>
+                        <button id="stop" class="btn btn-danger" onclick="stopRecording()" disabled>Stop</button>
+                    </p>
+
+                    <iframe name="hiddenFrame2" class="hide"></iframe>
+                    <h2>Restart</h2>
+                    <form class="form-inline" method="POST" action="{{ url_for('restart') }}" target="hiddenFrame2">
+                        <div class="form-group">
+                          <div class="input-group">
+                              
+                          </div>
+                          <button type="submit" class="btn btn-default">Restart</button>
+                        </div>
+                      </form>
+            </div>
+            <div class="column2" >
+                <h2>Audio Prediction</h2>
+                <p class="glow" id="output" style="font-size: 20px;"></p>
+                
+            </div>
+        </div>
+    </div>
+    {% extends "footer.html" %}
+    {% block footer%}fixed{% endblock %}
+    </body>
+    
+</html>
